@@ -14,6 +14,9 @@ func (mh myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.Handle("/", &myHandler{greeting: "Hello"})
+	// http.Handle("/", &myHandler{greeting: "Hello"})
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello world"))
+	})
 	http.ListenAndServe(":8000", nil)
 }
