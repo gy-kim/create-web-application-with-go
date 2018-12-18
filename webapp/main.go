@@ -1,14 +1,9 @@
 package main
 
-import (
-	"io"
-	"log"
-	"net/http"
-	"os"
-	"strings"
-)
+import "net/http"
 
 func main() {
+	/* // Custom File Server
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		f, err := os.Open("../public" + r.URL.Path)
 		if err != nil {
@@ -29,4 +24,12 @@ func main() {
 		io.Copy(w, f)
 	})
 	http.ListenAndServe(":8000", nil)
+	*/
+	/*
+		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			http.ServeFile(w, r, "../public"+r.URL.Path)
+		})
+		http.ListenAndServe(":8000", nil)
+	*/
+	http.ListenAndServe(":8000", http.FileServer(http.Dir("../public")))
 }
