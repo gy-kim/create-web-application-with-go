@@ -1,59 +1,22 @@
 {{define "content"}}
-	<div class="row detail">
-		<div class="columns-small-8 small-offset-2">
-			<div class="row">
-				<div class="columns small-4">
-					<img src="/img/lemon.png" alt="lemon" />
-				</div>
-				<div class="columns small-8 details">
-					<h2>Lemon Juice</h2>
-					<div class="row">
-						<div class="columns small-3 text-right">
-							Price
-						</div>
-						<div class="columns small-8 small-offset-1">
-							$1.09 / liter
-						</div>
-					</div>
-					<div class="row">
-						<div class="columns small-8 small-offset-4">
-							$1.04 / liter (10 or more)
-						</div>
-					</div>
-					<div class="row">
-						<div class="columns small-3 text-right">
-							Organic
-						</div>
-						<div class="columns small-8 small-offset-1">
-							Yes
-						</div>
-					</div>
-					<div class="row">
-						<div class="columns small-3 text-right">
-							Origin
-						</div>
-						<div class="columns small-8 small-offset-1">
-							California
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="columns small-10 small-offset-1">
-					<hr/>
-				</div>
-			</div>
+	<div class="row">
+		<div class="columns small-12">
 			<div class="row">
 				<div class="columns small-12">
-					<p>
-						Made from premium, organic Meyer lemons. These fruit are left on the tree until they reach the peak of ripeness 
-						and then juiced within 8 hours of being picked. 
-					</p>
-					<p>
-						Lemonade made from our premium juice is sure to make your stand the most popular in the neighborhood.
-					</p>
+					<ul class="row products small-block-grid-4">
+						{{range .Products}}
+							<li class="product">
+								<img src="/img/{{.ImageURL}}" alt="{{.ImageURL}}" /> 
+								<a href="/shop_detail">
+									<h3>{{.Name}}</h3>
+								</a>
+								<p>{{.DescriptionShort}}</p>
+								<p>${{.PricePerLiter | printf "%.2f"}} / liter</p>
+							</li>
+						{{end}}
+					</ul>
 				</div>
-			</div>
+			</div> 
 		</div>
-	</div>
+	</div> 
 {{end}}
