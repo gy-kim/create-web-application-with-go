@@ -3,11 +3,10 @@ package main
 import (
 	"html/template"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 
-	"github.com/gy-kim/creating-web-application-with-go/webapp/viewmodel"
+	"github.com/gy-kim/creating-web-application-with-go/webapp/controller"
 )
 
 func main() {
@@ -59,29 +58,33 @@ func main() {
 		http.Handle("/css/", http.FileServer(http.Dir("../public")))
 		http.ListenAndServe(":8000", nil) // http://localhost:8000/home
 	*/
-	tempaltes := populateTemplates()
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		requestedFile := r.URL.Path[1:]
-		template := tempaltes[requestedFile+".html"]
-		var context interface{}
-		switch requestedFile {
-		case "shop":
-			context = viewmodel.NewShop()
-		default:
-			context = viewmodel.NewHome()
-		}
-		if template != nil {
-			err := template.Execute(w, context)
-			if err != nil {
-				log.Println(err)
+	/*
+		templates := populateTemplates()
+		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			requestedFile := r.URL.Path[1:]
+			template := templates[requestedFile+".html"]
+			var context interface{}
+			switch requestedFile {
+			case "shop":
+				context = viewmodel.NewShop()
+			default:
+				context = viewmodel.NewHome()
 			}
-		} else {
-			w.WriteHeader(404)
-		}
-	})
-	http.Handle("/img/", http.FileServer(http.Dir("../public")))
-	http.Handle("/css/", http.FileServer(http.Dir("../public")))
-	http.ListenAndServe(":8000", nil) // http://localhost:8000/home
+			if template != nil {
+				err := template.Execute(w, context)
+				if err != nil {
+					log.Println(err)
+				}
+			} else {
+				w.WriteHeader(404)
+			}
+		})
+
+		http.ListenAndServe(":8000", nil) // http://localhost:8000/home
+	*/
+	templates := populateTemplates()
+	controller.Startup(templates)
+	http.ListenAndServe(":8000", nil)
 }
 
 // func populateTemplates() *template.Template {
