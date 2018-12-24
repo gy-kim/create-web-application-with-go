@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/gy-kim/creating-web-application-with-go/webapp/controller"
-	"github.com/gy-kim/creating-web-application-with-go/webapp/middleware"
 )
 
 func main() {
@@ -85,8 +84,8 @@ func main() {
 	*/
 	templates := populateTemplates()
 	controller.Startup(templates)
-	// http.ListenAndServe(":8000", nil)
-	http.ListenAndServe(":8000", new(middleware.GzipMiddleware))
+	http.ListenAndServe(":8000", nil)
+	// http.ListenAndServe(":8000", new(middleware.GzipMiddleware))
 }
 
 // func populateTemplates() *template.Template {
