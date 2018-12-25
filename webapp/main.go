@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gy-kim/creating-web-application-with-go/webapp/middleware"
+
 	"github.com/gy-kim/creating-web-application-with-go/webapp/controller"
 )
 
@@ -84,8 +86,9 @@ func main() {
 	*/
 	templates := populateTemplates()
 	controller.Startup(templates)
-	http.ListenAndServe(":8000", nil)
+	// http.ListenAndServe(":8000", nil)
 	// http.ListenAndServe(":8000", new(middleware.GzipMiddleware))
+	http.ListenAndServe(":8000", &middleware.TimeoutMiddleware{new(middleware.GzipMiddleware)})
 }
 
 // func populateTemplates() *template.Template {
