@@ -4,6 +4,12 @@ import (
 	"github.com/gy-kim/creating-web-application-with-go/webapp/model"
 )
 
+type ProductViewModel struct {
+	Title   string
+	Active  string
+	Product Product
+}
+
 type Product struct {
 	Name             string
 	DescriptionShort string
@@ -16,7 +22,7 @@ type Product struct {
 	ID               int
 }
 
-func productToVM(product model.Product) Product {
+func productToVM(product *model.Product) Product {
 	return Product{
 		Name:             product.Name,
 		DescriptionShort: product.DescriptionShort,
@@ -27,5 +33,13 @@ func productToVM(product model.Product) Product {
 		IsOrganic:        product.IsOrganic,
 		ImageURL:         product.ImageURL,
 		ID:               product.ID,
+	}
+}
+
+func NewProduct(product *model.Product) ProductViewModel {
+	return ProductViewModel{
+		Title:   "Lemonade Stand Supply - Shop",
+		Active:  "shop",
+		Product: productToVM(product),
 	}
 }
