@@ -1,12 +1,16 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 
 	"github.com/gy-kim/creating-web-application-with-go/webapp/middleware"
+	"github.com/gy-kim/creating-web-application-with-go/webapp/model"
 
 	"github.com/gy-kim/creating-web-application-with-go/webapp/controller"
 
@@ -88,9 +92,20 @@ func main() {
 	*/
 	templates := populateTemplates()
 	controller.Startup(templates)
+	db := connectToDatabase()
+	defer db.Close()
 	// http.ListenAndServe(":8000", nil)
 	// http.ListenAndServe(":8000", new(middleware.GzipMiddleware))
 	http.ListenAndServe(":8000", &middleware.TimeoutMiddleware{new(middleware.GzipMiddleware)})
+}
+
+func connectToDatabase() *sql.DB {
+	db, err := sql.Open("postgres", "postgres://postgres:example@localhost/postgres?sslmode=disable")
+	if err != nil {
+		log.Fatal(fmt.Errorf("Unable to connect to database: %v", err))
+	}
+	model.SetDatabase(db)
+	return db
 }
 
 // func populateTemplates() *template.Template {
