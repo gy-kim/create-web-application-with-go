@@ -9,6 +9,8 @@ import (
 	"github.com/gy-kim/creating-web-application-with-go/webapp/middleware"
 
 	"github.com/gy-kim/creating-web-application-with-go/webapp/controller"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
