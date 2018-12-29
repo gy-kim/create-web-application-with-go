@@ -14,6 +14,8 @@ import (
 
 	"github.com/gy-kim/creating-web-application-with-go/webapp/controller"
 
+	_ "net/http/pprof"
+
 	_ "github.com/lib/pq"
 )
 
@@ -97,6 +99,7 @@ func main() {
 	// http.ListenAndServe(":8000", nil)
 	// http.ListenAndServe(":8000", new(middleware.GzipMiddleware))
 	// http.ListenAndServe(":8000", &middleware.TimeoutMiddleware{new(middleware.GzipMiddleware)})
+	go http.ListenAndServe(":8080", nil)
 	http.ListenAndServeTLS(":8000", "../cert.pem", "../key.pem", &middleware.TimeoutMiddleware{new(middleware.GzipMiddleware)})
 }
 
