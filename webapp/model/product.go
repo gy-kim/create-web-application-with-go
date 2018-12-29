@@ -31,7 +31,7 @@ func GetProduct(productID int) (*Product, error) {
 			return &p, nil
 		}
 	}
-	return nil, fmt.Errorf("Product not found with ID &v", productID)
+	return nil, fmt.Errorf("Product not found with ID %v", productID)
 }
 
 var products []Product = []Product{
